@@ -1,6 +1,7 @@
 const debug = require('debug')('app:startup');
 
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
@@ -17,6 +18,7 @@ const auth = require('./auth');
 const index = require('./routes/index');
 const db = require('./routes/db');
 const upload = require('./routes/upload');
+const exampleApi = require('./routes/example-api');
 
 const app = express();
 
@@ -48,16 +50,28 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', index);
-app.use('/', auth.router);
-app.use('/db', db);
-app.use('/upload', upload);
-app.get('/protected', ensureLoggedIn('/login'), function(req, res, next) {
-  res.render('protected');
-});
+// app.use('/', index);
+// app.use('/', auth.router);
+// app.use('/db', db);
+// app.use('/upload', upload);
+// app.get('/protected', ensureLoggedIn('/login'), function(req, res, next) {
+//   res.render('protected');
+// });
 
-app.get('/api/foo', function(req, res, next) {
-  res.json({'hi': 'hello'});
+app.use('/api/foo', exampleApi);
+
+// react routing (production)
+var reactBase = path.resolve(__dirname, '../web/build')
+if (!fs.existsSync(reactBase)) {
+  throw 'missing build dir; to fix: run `npm run build` in web dir'
+}
+app.use('/static', express.static(path.join(reactBase, 'static')));
+// app.use(express.static(reactBase));
+var indexFile = path.join(reactBase, 'index.html')
+app.use(function(req, res, next) {
+  res.sendFile(indexFile, function(err) {
+    next(err);
+  });
 });
 
 // catch 404 and forward to error handler

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 class Secondpage extends Component {
 
@@ -11,7 +10,7 @@ class Secondpage extends Component {
     return (
       <div className="Secondpage">
         <p>
-          You are now on a second page! <Link to={`/`}>back to home</Link>
+          You are now on a second page!
         </p>
       </div>
     );
