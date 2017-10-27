@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
+  componentDidMount() {
+    axios.get('/api/foo')
+      .then(function (response) {
+        console.log(response);
+        // self.setState({message: response.data.message});  /*this will cause an invoke of the render() function again */
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <div className="App">

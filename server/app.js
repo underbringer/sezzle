@@ -56,6 +56,10 @@ app.get('/protected', ensureLoggedIn('/login'), function(req, res, next) {
   res.render('protected');
 });
 
+app.get('/api/foo', function(req, res, next) {
+  res.json({'hi': 'hello'});
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   let err = new Error('Not Found');

@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node ./server/bin/www",
-    "nodemon": "nodemon ./server/bin/www",
-    "dev": "heroku local dev"
+    "dev": "heroku local web,server --procfile Procfile.dev",
+    "dev-express": "nodemon ./server/bin/www",
+    "dev-react": "cd web ; npm start",
+    "postinstall": "cd web ; npm install ; npm run build"
   },
   "dependencies": {
     "body-parser": "~1.17.1",

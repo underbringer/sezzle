@@ -1,1 +1,1 @@
-dev: npm run nodemon
+dev: npm start
