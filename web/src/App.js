@@ -5,6 +5,11 @@ import './App.css';
 import Db from './Db';
 import Frontpage from './Frontpage';
 
+import Auth from './Auth.js';
+
+// const auth = new Auth();
+// auth.login();
+
 class App extends Component {
 
   render() {
