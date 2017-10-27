@@ -14,11 +14,14 @@ Example code:
 ## setup and run in development
 
 * create account at [mlab](https://mlab.com/)
-* create account at [auth0](https://auth0.com/)
+* create account at [auth0](https://auth0.com
+* install [heroku command line app](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up)
 * create file `.env` in root of project, something like this:
 
 ```
     DEBUG=app:*
+    PORT=3000
+    EXPRESS_PORT=3001
     AUTH0_DOMAIN=TODO.auth0.com
     AUTH0_CLIENT_ID=TODO
     AUTH0_CLIENT_SECRET=TODO
@@ -30,6 +33,7 @@ Example code:
 * run:
 
 ```
+    npm install
     npm run dev
 ```
 
