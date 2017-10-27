@@ -18,7 +18,7 @@ class App extends Component {
         <nav className="navbar is-light">
           <div className="navbar-menu">
             <div className="navbar-start">
-              <a className="navbar-item title" href="/">5117 Express Project Template</a>
+              <a className="navbar-item title" href="/">5117 React Project Template</a>
             </div>
             <div className="navbar-end">
               <div className="navbar-item">TODO</div>
