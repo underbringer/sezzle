@@ -1,25 +1,35 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 
-import './App.css';
+import axios from 'axios';
 
 class Db extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {todos: []};
+  }
+
+  componentDidMount() {
+    var self = this;
+    axios.get('/api/db')
+      .then(function (response) {
+        self.setState({todos: response.data.todos});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   render() {
+    let todoList = this.state.todos.map(function(todo) {
+      return <li key={todo._id}>{todo.task}</li>;
+    });
+
     return (
       <div className="Db">
 
         <h1>todos from a db call</h1>
         <ul>
-          <li>(todo task)</li>
-        </ul>
-
-        <h1>Demos:</h1>
-        <ul>
-          <li><Link to="/foo">go to second page</Link></li>
-          <li><a href="/db">db (TODO)</a></li>
-          <li><a href="/upload">file upload (TODO)</a></li>
-          <li><a href="/protected">protected page (TODO)</a></li>
+          {todoList}
         </ul>
 
       </div>

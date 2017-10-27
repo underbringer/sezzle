@@ -18,7 +18,8 @@ const auth = require('./auth');
 const index = require('./routes/index');
 const db = require('./routes/db');
 const upload = require('./routes/upload');
-const exampleApi = require('./routes/example-api');
+
+const dbApi = require('./routes/db-api');
 
 const app = express();
 
@@ -58,7 +59,7 @@ app.use(function(req, res, next) {
 //   res.render('protected');
 // });
 
-app.use('/api/foo', exampleApi);
+app.use('/api/db', dbApi);
 
 // react routing (production)
 var reactBase = path.resolve(__dirname, '../web/build')
