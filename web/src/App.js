@@ -1,32 +1,19 @@
 import React, { Component } from 'react';
-import { Link, Route, withRouter } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 
+import auth0 from './auth0';
 import ExampleQueryPage from './ExampleQueryPage';
 import Footer from './Footer';
 import FrontPage from './FrontPage';
 import Header from './Header';
 import ProfilePage from './ProfilePage';
 
-import auth0 from 'auth0-js';
-
 class App extends Component {
-
-  auth0 = new auth0.WebAuth({
-    domain: 'maxharp3r.auth0.com',
-    clientID: 'ib-OlMoJ1_C5oyTsOUgOX_6ImltKk8lW',
-    redirectUri: 'http://localhost:3000/callback',
-
-    // must match with API identifier in auth0
-    // audience: 'https://react-project-template-5117.herokuapp.com/api/',
-    audience: 'https://maxharp3r.auth0.com/api/v2/',
-    responseType: 'token id_token',
-
-    // scope matches with auth0 scopes
-    scope: 'openid profile read:messages'
-  });
 
   constructor(props) {
     super(props);
+    this.auth0 = auth0;
+
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);

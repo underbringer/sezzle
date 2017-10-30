@@ -7,8 +7,6 @@ class ProfilePage extends Component {
       profile: {}
     });
 
-    console.log('asdf', this.props.userProfile);
-
     if (!this.props.userProfile) {
       this.props.getProfile((err, profile) => {
         this.setState({ profile });

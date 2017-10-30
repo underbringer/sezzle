@@ -7,7 +7,7 @@ const Auth0Strategy = require('passport-auth0');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 
-debug(`auth0: domain=${process.env.AUTH0_DOMAIN}`)
+debug(`auth0: domain=${process.env.REACT_APP_AUTH0_DOMAIN}`)
 
 // Authentication middleware. When used, the
 // access token must exist and be verified against
@@ -20,12 +20,12 @@ const checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 60,
-    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+    jwksUri: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/.well-known/jwks.json`
   }),
 
   // Validate the audience and the issuer.
-  audience: `https://${process.env.AUTH0_DOMAIN}/api/v2/`,
-  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+  audience: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/`,
+  issuer: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/`,
   algorithms: ['RS256']
 });
 
@@ -34,10 +34,10 @@ module.exports.checkJwt = checkJwt;
 
 passport.use(new Auth0Strategy(
   {
-    domain: process.env.AUTH0_DOMAIN,
-    clientID: process.env.AUTH0_CLIENT_ID,
+    domain: process.env.REACT_APP_AUTH0_DOMAIN,
+    clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    callbackURL: process.env.AUTH0_CALLBACK_URL
+    callbackURL: process.env.REACT_APP_AUTH0_CALLBACK_URL
   },
   (accessToken, refreshToken, extraParams, profile, done) => {
     // debug("auth0 strategy callback; profile: " + JSON.stringify(profile, null, 4));
@@ -64,10 +64,10 @@ var router = express.Router();
 router.get(
   '/login',
   passport.authenticate('auth0', {
-    clientID: process.env.AUTH0_CLIENT_ID,
-    domain: process.env.AUTH0_DOMAIN,
-    redirectUri: process.env.AUTH0_CALLBACK_URL,
-    audience: 'https://' + process.env.AUTH0_DOMAIN + '/userinfo',
+    clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
+    domain: process.env.REACT_APP_AUTH0_DOMAIN,
+    redirectUri: process.env.REACT_APP_AUTH0_CALLBACK_URL,
+    audience: 'https://' + process.env.REACT_APP_AUTH0_DOMAIN + '/userinfo',
     responseType: 'code',
     scope: 'openid profile'
   }),
