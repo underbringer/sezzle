@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom'
 
 import ExampleQueryPage from './ExampleQueryPage';
+import Footer from './Footer';
 import FrontPage from './FrontPage';
+import Header from './Header';
 import ProfilePage from './ProfilePage';
 
 import auth0 from 'auth0-js';
@@ -95,34 +97,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <nav className="navbar is-light">
-          <div className="navbar-menu">
-            <div className="navbar-start">
-              <a className="navbar-item title" href="/">5117 React Project Template</a>
-            </div>
-            <div className="navbar-end">
-              <div className="navbar-item">
-
-                {
-                  !this.isAuthenticated() && (
-                    <button className="button" onClick={this.login}>
-                      Log In
-                    </button>
-                  )
-                }
-
-                {
-                  this.isAuthenticated() && (
-                    <button className="button" onClick={this.logout}>
-                      Log Out
-                    </button>
-                  )
-                }
-
-              </div>
-            </div>
-          </div>
-        </nav>
+        <Header isAuthenticated={this.isAuthenticated} login={this.login} logout={this.logout} />
 
         <section className="section">
           <div className="content">
@@ -148,20 +123,7 @@ class App extends Component {
           </div>
         </section>
 
-        <section className="section">
-          <footer>
-            <div className="content">
-              <h1>pages:</h1>
-              <ul>
-                <li><Link to="/">home page</Link></li>
-                <li><Link to="/profile">profile page</Link></li>
-                <li><Link to="/example-query">example query</Link></li>
-                <li><a href="/upload">file upload (TODO)</a></li>
-                <li><a href="/protected">protected page (TODO)</a></li>
-              </ul>
-            </div>
-          </footer>
-        </section>
+        <Footer />
       </div>
     );
   }
