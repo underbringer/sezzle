@@ -17,7 +17,11 @@ class Frontpage extends Component {
   render() {
     return (
       <div className="Frontpage">
-        <h1>the front page!</h1>
+        <h1>
+          <span className="icon"><i className="fa fa-home"></i></span>
+          &nbsp;
+          the front page!
+        </h1>
         <div>
           <button className="button" onClick={this.foo}>example button</button>
         </div>
