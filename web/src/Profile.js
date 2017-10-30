@@ -7,16 +7,14 @@ class Profile extends Component {
       profile: {}
     });
 
-    console.log('AUTH', this.props.auth);
+    console.log('asdf', this.props.userProfile);
 
-    const { userProfile, getProfile } = this.props.auth;
-
-    if (!userProfile) {
-      getProfile((err, profile) => {
+    if (!this.props.userProfile) {
+      this.props.getProfile((err, profile) => {
         this.setState({ profile });
       });
     } else {
-      this.setState({ profile: userProfile });
+      this.setState({ profile: this.props.userProfile });
     }
   }
 

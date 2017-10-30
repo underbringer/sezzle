@@ -1,38 +1,98 @@
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, withRouter } from 'react-router-dom'
 
-import './App.css';
 import Db from './Db';
 import Frontpage from './Frontpage';
 import Profile from './Profile';
 
-import Auth from './Auth.js';
-
-const auth = new Auth();
-
-const handleAuthentication = (nextState, replace) => {
-  if (/access_token|id_token|error/.test(nextState.location.hash)) {
-    auth.handleAuthentication();
-  }
-}
+import auth0 from 'auth0-js';
 
 class App extends Component {
 
-  goTo(route) {
-    this.props.history.replace(`/${route}`)
+  auth0 = new auth0.WebAuth({
+    domain: 'maxharp3r.auth0.com',
+    clientID: 'ib-OlMoJ1_C5oyTsOUgOX_6ImltKk8lW',
+    redirectUri: 'http://localhost:3000/callback',
+
+    // must match with API identifier in auth0
+    // audience: 'https://react-project-template-5117.herokuapp.com/api/',
+    audience: 'https://maxharp3r.auth0.com/api/v2/',
+    responseType: 'token id_token',
+
+    // scope matches with auth0 scopes
+    scope: 'openid profile read:messages'
+  });
+
+  constructor(props) {
+    super(props);
+    this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+    this.getProfile = this.getProfile.bind(this);
+    this.getAccessToken = this.getAccessToken.bind(this);
   }
 
   login() {
-    this.props.auth.login();
+    this.auth0.authorize();
+  }
+
+  handleAuthentication() {
+    this.auth0.parseHash((err, authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        this.setSession(authResult);
+        this.props.history.replace('/');
+      } else if (err) {
+        this.props.history.replace('/');
+        console.log(err);
+      }
+    });
+  }
+
+  setSession(authResult) {
+    // Set the time that the access token will expire at
+    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('expires_at', expiresAt);
+    // navigate to the home route
+    this.props.history.replace('/');
   }
 
   logout() {
-    this.props.auth.logout();
+    // Clear access token and ID token from local storage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+    // navigate to the home route
+    this.props.history.replace('/');
+  }
+
+  isAuthenticated() {
+    // Check whether the current time is past the
+    // access token's expiry time
+    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < expiresAt;
+  }
+
+  getAccessToken() {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('No access token found');
+    }
+    return accessToken;
+  }
+
+  getProfile(cb) {
+    let accessToken = this.getAccessToken();
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        this.userProfile = profile;
+      }
+      cb(err, profile);
+    });
   }
 
   render() {
-    const { isAuthenticated } = this.props.auth;
-
     return (
       <div className="App">
         <nav className="navbar is-light">
@@ -44,16 +104,16 @@ class App extends Component {
               <div className="navbar-item">
 
                 {
-                  !isAuthenticated() && (
-                    <button className="button" onClick={this.login.bind(this)}>
+                  !this.isAuthenticated() && (
+                    <button className="button" onClick={this.login}>
                       Log In
                     </button>
                   )
                 }
 
                 {
-                  isAuthenticated() && (
-                    <button className="button" onClick={this.logout.bind(this)}>
+                  this.isAuthenticated() && (
+                    <button className="button" onClick={this.logout}>
                       Log Out
                     </button>
                   )
@@ -71,16 +131,18 @@ class App extends Component {
               <Route exact path="/" component={Frontpage}/>
             </div>
             <div>
-              <Route path="/db" render={(props) => <Db auth={auth} {...props} />} />
+              <Route path="/db" render={(props) => <Db getAccessToken={this.getAccessToken} {...props} />} />
             </div>
             <div>
               <Route path="/callback" render={(props) => {
-                handleAuthentication(props);
+                this.handleAuthentication(props);
                 return <div>loading...</div>
               }}/>
             </div>
             <div>
-              <Route path="/profile" render={(props) => <Profile auth={auth} {...props} />} />
+              <Route path="/profile" render={
+                (props) => <Profile userProfile={this.userProfile} getProfile={this.getProfile} {...props} />
+              } />
             </div>
 
           </div>
@@ -105,4 +167,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
