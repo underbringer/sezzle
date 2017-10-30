@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Profile extends Component {
+class ProfilePage extends Component {
 
   componentWillMount() {
     this.setState({
@@ -30,4 +30,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default ProfilePage;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Db extends Component {
+class ExampleQueryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {todos: []};
@@ -47,4 +47,4 @@ class Db extends Component {
   }
 }
 
-export default Db;
+export default ExampleQueryPage;

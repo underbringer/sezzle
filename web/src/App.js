@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom'
 
-import Db from './Db';
-import Frontpage from './Frontpage';
-import Profile from './Profile';
+import ExampleQueryPage from './ExampleQueryPage';
+import FrontPage from './FrontPage';
+import ProfilePage from './ProfilePage';
 
 import auth0 from 'auth0-js';
 
@@ -128,10 +128,10 @@ class App extends Component {
           <div className="content">
 
             <div>
-              <Route exact path="/" component={Frontpage}/>
+              <Route exact path="/" component={FrontPage}/>
             </div>
             <div>
-              <Route path="/db" render={(props) => <Db getAccessToken={this.getAccessToken} {...props} />} />
+              <Route path="/example-query" render={(props) => <ExampleQueryPage getAccessToken={this.getAccessToken} {...props} />} />
             </div>
             <div>
               <Route path="/callback" render={(props) => {
@@ -141,7 +141,7 @@ class App extends Component {
             </div>
             <div>
               <Route path="/profile" render={
-                (props) => <Profile userProfile={this.userProfile} getProfile={this.getProfile} {...props} />
+                (props) => <ProfilePage userProfile={this.userProfile} getProfile={this.getProfile} {...props} />
               } />
             </div>
 
@@ -155,7 +155,7 @@ class App extends Component {
               <ul>
                 <li><Link to="/">home page</Link></li>
                 <li><Link to="/profile">profile page</Link></li>
-                <li><Link to="/db">db</Link></li>
+                <li><Link to="/example-query">example query</Link></li>
                 <li><a href="/upload">file upload (TODO)</a></li>
                 <li><a href="/protected">protected page (TODO)</a></li>
               </ul>

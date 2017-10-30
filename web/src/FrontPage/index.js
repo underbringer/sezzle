@@ -16,7 +16,7 @@ class Frontpage extends Component {
 
   render() {
     return (
-      <div className="Frontpage">
+      <div className="FrontPage">
         <h1>
           <span className="icon"><i className="fa fa-home"></i></span>
           &nbsp;
