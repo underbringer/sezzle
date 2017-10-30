@@ -22,16 +22,19 @@ class Db extends Component {
       return <li key={todo._id}>{todo.task}</li>;
     });
 
-    return (
-      <div className="Db">
+    if (!this.state.todos || !this.state.todos.length) {
+      return <div>loading...</div>
+    } else {
+      return (
+        <div className="Db">
+          <h1>todos from a db call</h1>
+          <ul>
+            {todoList}
+          </ul>
+        </div>
+      );
+    }
 
-        <h1>todos from a db call</h1>
-        <ul>
-          {todoList}
-        </ul>
-
-      </div>
-    );
   }
 }
 
