@@ -7,15 +7,13 @@ class Db extends Component {
   }
 
   componentDidMount() {
-    var self = this;
-
     fetch('/api/db')
       .then(res => res.json())
       .then(json => {
-        self.setState({'todos': json.todos});
+        this.setState({'todos': json.todos});
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
       });
   }
 
