@@ -4,7 +4,33 @@ const express = require('express');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 
+const jwt = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
+
 debug(`auth0: domain=${process.env.AUTH0_DOMAIN}`)
+
+// Authentication middleware. When used, the
+// access token must exist and be verified against
+// the Auth0 JSON Web Key Set
+const checkJwt = jwt({
+  // Dynamically provide a signing key
+  // based on the kid in the header and
+  // the singing keys provided by the JWKS endpoint.
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 60,
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+  }),
+
+  // Validate the audience and the issuer.
+  audience: `https://${process.env.AUTH0_DOMAIN}/api/v2/`,
+  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+  algorithms: ['RS256']
+});
+
+module.exports.checkJwt = checkJwt;
+
 
 passport.use(new Auth0Strategy(
   {

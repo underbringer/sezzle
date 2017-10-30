@@ -7,7 +7,16 @@ class Db extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/db')
+    const { getAccessToken } = this.props.auth;
+    let myHeaders = new Headers();
+    myHeaders.append('Authorization', `Bearer ${getAccessToken()}`);
+
+    let myRequest = new Request('/api/db', {
+      method: 'GET',
+      headers: myHeaders
+    });
+
+    fetch(myRequest)
       .then(res => res.json())
       .then(json => {
         this.setState({'todos': json.todos});

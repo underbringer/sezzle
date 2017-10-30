@@ -10,9 +10,14 @@ export default class Auth {
     domain: 'maxharp3r.auth0.com',
     clientID: 'ib-OlMoJ1_C5oyTsOUgOX_6ImltKk8lW',
     redirectUri: 'http://localhost:3000/callback',
-    audience: 'https://maxharp3r.auth0.com/userinfo',
+
+    // must match with API identifier in auth0
+    // audience: 'https://react-project-template-5117.herokuapp.com/api/',
+    audience: 'https://maxharp3r.auth0.com/api/v2/',
     responseType: 'token id_token',
-    scope: 'openid profile'
+
+    // scope matches with auth0 scopes
+    scope: 'openid profile read:messages'
   });
   userProfile;
 

@@ -71,7 +71,7 @@ class App extends Component {
               <Route exact path="/" component={Frontpage}/>
             </div>
             <div>
-              <Route path="/db" component={Db}/>
+              <Route path="/db" render={(props) => <Db auth={auth} {...props} />} />
             </div>
             <div>
               <Route path="/callback" render={(props) => {

@@ -15,6 +15,9 @@ Example code:
 
 * create account at [mlab](https://mlab.com/)
 * create account at [auth0](https://auth0.com
+    * create a client
+    * In the APIs section of the Auth0 dashboard, click Create API
+      (pick any name, any identifier)
 * install [heroku command line app](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up)
 * create file `.env` in root of project, something like this:
 
