@@ -93,18 +93,22 @@ class App extends Component {
               <Route exact path="/" component={FrontPage}/>
             </div>
             <div>
-              <Route path="/example-query" render={(props) => <ExampleQueryPage getAccessToken={this.getAccessToken} {...props} />} />
+              <Route path="/example-query"
+                render={(props) => <ExampleQueryPage getAccessToken={this.getAccessToken} {...props} />}
+              />
             </div>
             <div>
-              <Route path="/callback" render={(props) => {
-                this.handleAuthentication(props);
-                return <div>loading...</div>
-              }}/>
+              <Route path="/callback"
+                render={(props) => {
+                  this.handleAuthentication(props);
+                  return <div>loading...</div>
+                }
+              }/>
             </div>
             <div>
-              <Route path="/profile" render={
-                (props) => <ProfilePage userProfile={this.userProfile} getProfile={this.getProfile} {...props} />
-              } />
+              <Route path="/profile"
+                render={(props) => <ProfilePage userProfile={this.userProfile} getProfile={this.getProfile} {...props} />}
+              />
             </div>
 
           </div>

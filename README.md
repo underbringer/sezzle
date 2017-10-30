@@ -19,17 +19,23 @@ Example code:
     * In the APIs section of the Auth0 dashboard, click Create API
       (pick any name, any identifier)
 * install [heroku command line app](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up)
-* create file `.env` in root of project, something like this:
+* edit file `web/.env` to configure react, and commit the changes
+* create file `.env` in root of project to configure express, something like this:
 
 ```
     DEBUG=app:*
+
     PORT=3000
     EXPRESS_PORT=3001
-    AUTH0_DOMAIN=TODO.auth0.com
+
+    AUTH0_DOMAIN=TODO
     AUTH0_CLIENT_ID=TODO
     AUTH0_CLIENT_SECRET=TODO
     AUTH0_CALLBACK_URL=http://localhost:3000/callback
+    AUTH0_API_ID=TODO
+
     DB_URI=mongodb://5117:5117iscool@ec2-54-175-174-41.compute-1.amazonaws.com:80/5117-f17-individual-hw
+
     SESSION_SECRET=TODOanythingisfinehere
 ```
 
