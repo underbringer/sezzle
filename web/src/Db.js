@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import axios from 'axios';
-
 class Db extends Component {
   constructor(props) {
     super(props);
@@ -10,9 +8,11 @@ class Db extends Component {
 
   componentDidMount() {
     var self = this;
-    axios.get('/api/db')
-      .then(function (response) {
-        self.setState({todos: response.data.todos});
+
+    fetch('/api/db')
+      .then(res => res.json())
+      .then(json => {
+        self.setState({'todos': json.todos});
       })
       .catch(function (error) {
         console.log(error);
