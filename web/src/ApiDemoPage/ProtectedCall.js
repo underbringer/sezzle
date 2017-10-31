@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
-class ExampleQueryPage extends Component {
+/**
+ * Demo of a fully authenticated API call.
+ */
+class ProtectedCall extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,14 +15,16 @@ class ExampleQueryPage extends Component {
   componentDidMount() {
     this.loading = true;
 
-    let myRequest = new Request('/api/db', {
+    let myRequest = new Request('/api/db/protected', {
       method: 'GET',
+      // this header sends the user token from auth0
       headers: this.props.getAuthorizationHeader()
     });
 
     fetch(myRequest)
       .then(response => {
         this.loading = false;
+        // https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
         if (!response.ok) {
           throw Error(response.statusText);
         }
@@ -44,7 +49,7 @@ class ExampleQueryPage extends Component {
     } else {
       return (
         <div className="Db">
-          <h1>todos from a db call</h1>
+          <h1>todos from a protected db call</h1>
           <ul>
             {todoList}
           </ul>
@@ -55,4 +60,4 @@ class ExampleQueryPage extends Component {
   }
 }
 
-export default ExampleQueryPage;
+export default ProtectedCall;

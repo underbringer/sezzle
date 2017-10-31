@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 
 class ProfilePage extends Component {
 
+  // to redirect if not logged in:
+  // componentWillMount() {
+  //   if (!this.props.isAuthenticated() || !!this.props.profile) {
+  //     this.props.history.replace('/');
+  //   }
+  // }
+
   render() {
+
     let profileInfo = <div>not logged in</div>;
     if (this.props.profile) {
       profileInfo = (

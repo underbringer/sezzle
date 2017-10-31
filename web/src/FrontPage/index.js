@@ -3,15 +3,24 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './frontpage.css';
 
+const countStyle = {
+  color: 'brown',
+};
+
 class Frontpage extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      clickCount: 0
+    }
     this.foo = this.foo.bind(this);
   }
 
   foo() {
-    this.props.history.replace('/db')
+    this.setState(prevState => {
+      return {clickCount: prevState.clickCount + 1}
+    })
   }
 
   render() {
@@ -22,12 +31,22 @@ class Frontpage extends Component {
           &nbsp;
           the front page!
         </h1>
-        <div>
-          <button className="button" onClick={this.foo}>example button</button>
+
+        <div className="level">
+          <div className="level-left">
+            <div className="level-item">
+              <button className="button" onClick={this.foo}>example button</button>
+            </div>
+            <div className="level-item" style={countStyle}>
+              click count: {this.state.clickCount}
+            </div>
+          </div>
         </div>
+
         <div>
           <img src={logo} className="the-logo" alt="logo" />
         </div>
+
       </div>
     );
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom'
 
 import { withAuth } from './Auth';
-import ExampleQueryPage from './ExampleQueryPage';
+import ApiDemoPage from './ApiDemoPage';
 import Footer from './Footer';
 import FrontPage from './FrontPage';
 import Header from './Header';
@@ -25,9 +25,10 @@ class App extends Component {
 
             <Route exact path="/" component={FrontPage}/>
 
-            <Route path="/example-query" render={props => <ExampleQueryPage {...this.props} />} />
+            {/* send in props for router stuff; send in this.props for auth stuff */}
+            <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
 
-            <Route path="/profile" render={props => <ProfilePage {...this.props} />} />
+            <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
 
           </div>
         </section>

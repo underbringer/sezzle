@@ -4,8 +4,23 @@ var router = express.Router();
 const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
 
+// simple API call, no authentication or user info
+router.get('/unprotected', function(req, res, next) {
+
+  req.db.collection('max_todo').find().toArray(function(err, results) {
+    if (err) {
+      next(err);
+    }
+
+    res.json({
+      todos: results
+    });
+  });
+
+});
+
 // checkJwt middleware will enforce valid authorization token
-router.get('/', checkJwt, function(req, res, next) {
+router.get('/protected', checkJwt, function(req, res, next) {
 
   // the auth0 user identifier
   console.log('auth0 user id:', req.user.sub);
@@ -31,5 +46,7 @@ router.get('/', checkJwt, function(req, res, next) {
   });
 
 });
+
+
 
 module.exports = router;
