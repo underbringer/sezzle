@@ -8,13 +8,12 @@ class ProtectedCall extends Component {
     super(props);
     this.state = {
       todos: [],
-      loading: false
+      error: false,
+      loading: true
     };
   }
 
   componentDidMount() {
-    this.loading = true;
-
     let myRequest = new Request('/api/db/protected', {
       method: 'GET',
       // this header sends the user token from auth0
@@ -23,16 +22,19 @@ class ProtectedCall extends Component {
 
     fetch(myRequest)
       .then(response => {
-        this.loading = false;
         // https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
         if (!response.ok) {
+          this.setState({ 'loading': false, 'error': true });
           throw Error(response.statusText);
         }
         return response;
       })
       .then(res => res.json())
       .then(json => {
-        this.setState({'todos': json.todos});
+        this.setState({
+          'todos': json.todos,
+          'loading': false
+        });
       })
       .catch(function (error) {
         console.error(error);
@@ -44,8 +46,10 @@ class ProtectedCall extends Component {
       return <li key={todo._id}>{todo.task}</li>;
     });
 
-    if (this.loading) {
-      return <div>loading...</div>
+    if (this.state.loading) {
+      return <h1>loading...</h1>
+    } else if (this.state.error) {
+      return <h1>todos from a protected db call (401 unauthorized)</h1>
     } else {
       return (
         <div className="Db">

@@ -8,16 +8,14 @@ class UnprotectedCall extends Component {
     super(props);
     this.state = {
       todos: [],
-      loading: false
+      loading: true
     };
   }
 
   componentDidMount() {
-    this.loading = true;
 
     fetch('/api/db/unprotected')
       .then(response => {
-        this.loading = false;
         // https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
         if (!response.ok) {
           throw Error(response.statusText);
@@ -26,9 +24,10 @@ class UnprotectedCall extends Component {
       })
       .then(res => res.json())
       .then(json => {
-        this.setState({'todos': json.todos});
+        this.setState({'todos': json.todos, 'loading': false});
       })
       .catch(function (error) {
+        this.setState({'loading': false});
         console.error(error);
       });
   }
@@ -38,8 +37,8 @@ class UnprotectedCall extends Component {
       return <li key={todo._id}>{todo.task}</li>;
     });
 
-    if (this.loading) {
-      return <div>loading...</div>
+    if (this.state.loading) {
+      return <h1>loading...</h1>
     } else {
       return (
         <div className="Db">
