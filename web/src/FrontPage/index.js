@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import logo from './logo.svg';
+import frustratedMonkey from './frustrated-monkey.gif';
 import './frontpage.css';
 
 const countStyle = {
@@ -44,7 +44,7 @@ class Frontpage extends Component {
         </div>
 
         <div>
-          <img src={logo} className="the-logo" alt="logo" />
+          <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
         </div>
 
       </div>
