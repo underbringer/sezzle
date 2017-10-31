@@ -11,7 +11,6 @@ const Footer = () => (
           <li><Link to="/">home page</Link></li>
           <li><Link to="/profile">profile page (protected)</Link></li>
           <li><Link to="/api-demo">API demo (protected and unprotected)</Link></li>
-          <li><a href="/upload">file upload (TODO)</a></li>
         </ul>
       </div>
     </footer>
