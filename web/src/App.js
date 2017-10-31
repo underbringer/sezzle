@@ -11,6 +11,10 @@ import ProfilePage from './ProfilePage';
 class App extends Component {
 
   render() {
+
+    // console.log('is authenticated?', this.props.isAuthenticated());
+    // console.log('profile', this.props.profile);
+
     return (
       <div className="App">
         <Header {...this.props} />

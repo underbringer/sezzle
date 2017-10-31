@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 
+import LoginLogout from './LoginLogout';
+
 class Header extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.isAuthenticated = this.props.isAuthenticated.bind(this);
-    this.login = this.props.login.bind(this);
-    this.logout = this.props.logout.bind(this);
-  }
 
   render() {
     return (
@@ -17,31 +11,13 @@ class Header extends Component {
           <div className="navbar-start">
             <a className="navbar-item title" href="/">5117 React Project Template</a>
           </div>
-          <div className="navbar-end">
-            <div className="navbar-item">
 
-              {
-                !this.isAuthenticated() && (
-                  <button className="button" onClick={this.login}>
-                    Log In
-                  </button>
-                )
-              }
-
-              {
-                this.isAuthenticated() && (
-                  <button className="button" onClick={this.logout}>
-                    Log Out
-                  </button>
-                )
-              }
-
-            </div>
-          </div>
+          <LoginLogout {...this.props} />
         </div>
       </nav>
     )
   }
+  
 }
 
 export default Header;
