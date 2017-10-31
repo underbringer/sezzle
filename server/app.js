@@ -51,14 +51,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-// app.use('/', index);
-// app.use('/', auth.router);
-// app.use('/db', db);
-// app.use('/upload', upload);
-// app.get('/protected', ensureLoggedIn('/login'), function(req, res, next) {
-//   res.render('protected');
-// });
-
 app.use('/api/db', dbApi);
 
 // react routing (production)
@@ -86,13 +78,17 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   console.error(err);
 
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // render error json
+  const status = err.status || 500;
+  json = {
+    'error': status
+  }
+  if (req.app.get('env') === 'development') {
+    json.message = err.message;
+  }
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(status);
+  res.json(json);
 });
 
 debug(`app.js loaded`);

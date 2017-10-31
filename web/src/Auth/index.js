@@ -41,7 +41,6 @@ function withAuth(WrappedComponent) {
       this._handleAuthentication = this._handleAuthentication.bind(this);
       this.login = this.login.bind(this);
       this.logout = this.logout.bind(this);
-      this.getAccessToken = this.getAccessToken.bind(this);
     }
 
     login() {
@@ -107,10 +106,14 @@ function withAuth(WrappedComponent) {
     }
 
     /**
-     * return the access token, or null if the user is not logged in.
+     * returns an {Authorization: Bearer token} object for use in a fetch header.
+     * returns an empty object if not logged in.
      */
-    getAccessToken() {
-      return localStorage.getItem('access_token');
+    getAuthorizationHeader() {
+      const token = localStorage.getItem('access_token');
+      return !token ? {} : {
+        'Authorization': `Bearer ${token}`
+      };
     }
 
     render() {
@@ -120,7 +123,7 @@ function withAuth(WrappedComponent) {
             isAuthenticated={this.isAuthenticated}
             login={this.login}
             logout={this.logout}
-            getAccessToken={this.getAccessToken}
+            getAuthorizationHeader={this.getAuthorizationHeader}
             profile={this.state.profile}
             />
 

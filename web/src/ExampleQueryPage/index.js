@@ -3,20 +3,28 @@ import React, { Component } from 'react';
 class ExampleQueryPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {todos: []};
+    this.state = {
+      todos: [],
+      loading: false
+    };
   }
 
   componentDidMount() {
-    // const { getAccessToken } = this.props.auth;
-    let myHeaders = new Headers();
-    myHeaders.append('Authorization', `Bearer ${this.props.getAccessToken()}`);
+    this.loading = true;
 
     let myRequest = new Request('/api/db', {
       method: 'GET',
-      headers: myHeaders
+      headers: this.props.getAuthorizationHeader()
     });
 
     fetch(myRequest)
+      .then(response => {
+        this.loading = false;
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response;
+      })
       .then(res => res.json())
       .then(json => {
         this.setState({'todos': json.todos});
@@ -31,7 +39,7 @@ class ExampleQueryPage extends Component {
       return <li key={todo._id}>{todo.task}</li>;
     });
 
-    if (!this.state.todos || !this.state.todos.length) {
+    if (this.loading) {
       return <div>loading...</div>
     } else {
       return (

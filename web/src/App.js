@@ -12,11 +12,12 @@ class App extends Component {
 
   render() {
 
-    // console.log('is authenticated?', this.props.isAuthenticated());
-    // console.log('profile', this.props.profile);
+    // this.props has a bunch of stuff in it related to auth0 (from `withAuth` below)
+    // console.log('props', this.props);
 
     return (
       <div className="App">
+
         <Header {...this.props} />
 
         <section className="section">
@@ -32,6 +33,7 @@ class App extends Component {
         </section>
 
         <Footer />
+
       </div>
     );
   }
