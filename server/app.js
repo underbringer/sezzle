@@ -13,6 +13,21 @@ const auth = require('./auth');
 const dbApi = require('./routes/db-api');
 
 const app = express();
+
+
+/*******test*************/
+// var server = app.listen(3000);
+// var http = require('http');
+// var server = http.createServer(app);
+// const socketIO = require('socket.io');
+// const io = socketIO(server);
+
+/***********************/
+
+
+
+
+
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());

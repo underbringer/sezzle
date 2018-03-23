@@ -26,17 +26,16 @@ class LoginLogout extends Component {
     const loginLogoutButton = this.isLoggedIn()
       ? (
         <button className="button" onClick={this.logout}>
-          Log Out
+          Sign Out
         </button>
       ) : (
         <button className="button" onClick={this.login}>
-          Log In
+          Sign In
         </button>
       );
-
     return (
-      <div className="navbar-end">
-        {userDisplay}
+      <div className="navbar-end" >
+        <strong>{userDisplay}</strong>
 
         <div className="navbar-item">
           {loginLogoutButton}
