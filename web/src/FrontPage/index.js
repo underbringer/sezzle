@@ -25,7 +25,7 @@ class Frontpage extends React.Component {
     this.softReset = this.softReset.bind(this);
     this.returnBack = this.returnBack.bind(this);
     this.upLoad = this.upLoad.bind(this);
-    // this.downLoad = this.downLoad.bind(this);
+     this.downLoad = this.downLoad.bind(this);
     this.update = this.update.bind(this);
   }
   update =(res) =>{
@@ -36,14 +36,14 @@ class Frontpage extends React.Component {
     socket.emit('update result',ct);
   }
   componentDidMount(){
-    // this.downLoad();
+    this.downLoad();
     const socket = socketIOClient(this.state.endpoint);
     socket.on('update result', (res) => {
       console.log("I am updating");
       var arr = this.state.answers.slice();
 
       arr.unshift({num:res.num,name:res.name,date:res.date});
-
+      this.upLoad({answers:arr.slice(0,10)});
       this.setState({answers:arr.slice(0,10)});
     })
   }
@@ -86,26 +86,27 @@ class Frontpage extends React.Component {
       });
     }
   }
-  // downLoad(){
-  //   var myHeaders2 = new Headers();
-  //   myHeaders2.append('Content-Type', 'application/json');
-  //   let myRequest2 = new Request('/api/db/find', {
-  //     method: 'POST',
-  //     headers: myHeaders2,
-  //   });
-  //   fetch(myRequest2)
-  //   .then(response => {
-  //     if (!response.ok) {
-  //     }
-  //     return response;
-  //   })
-  //   .then(res =>res.json())
-  //   .then(json =>this.setState({answers:json.ans}))
-  //   .then(console.log(this.state.answers))
-  //   .catch(function (error) {
-  //     console.error(error);
-  //   });
-  // }
+  downLoad(){
+    var myHeaders2 = new Headers();
+    myHeaders2.append('Content-Type', 'application/json');
+    let myRequest2 = new Request('/api/db/find', {
+      method: 'POST',
+      headers: myHeaders2,
+    });
+    fetch(myRequest2)
+    .then(response => {
+      if (!response.ok) {
+      }
+      return response;
+    })
+    .then(res =>res.json())
+     // .then(json=>console.log(json.data.num.answers))
+    .then(json =>this.setState({answers:json.data.num.answers}))
+    .then(console.log(this.state.answers))
+    .catch(function (error) {
+      console.error(error);
+    });
+  }
   upLoad(answer){
     // console.log(this.props.profile.nickname);
     var myHeaders = new Headers();
@@ -141,7 +142,7 @@ class Frontpage extends React.Component {
         this.setState({showFinalResult: true, finalResult: resPlus,equation:eq});
         this.softReset();
         this.update(resPlus);
-        this.upLoad(eq);
+        // this.upLoad(eq);
         break;
       }
       case '-': {
@@ -150,7 +151,7 @@ class Frontpage extends React.Component {
         this.setState({showFinalResult: true, finalResult: resMinus,equation:eq});
         this.softReset();
         this.update(eq);
-        this.upLoad(eq);
+        // this.upLoad(eq);
         break;
       }
       case '*': {
@@ -159,7 +160,7 @@ class Frontpage extends React.Component {
         this.setState({showFinalResult: true, finalResult: resTimes,equation:eq});
         this.softReset();
         this.update(eq);
-        this.upLoad(eq);
+        // this.upLoad(eq);
         break;
       }
       case '/': {
@@ -168,7 +169,7 @@ class Frontpage extends React.Component {
         this.setState({showFinalResult: true, finalResult: resDivBy,equation:eq});
         this.softReset();
         this.update(eq);
-        this.upLoad(eq);
+        // this.upLoad(eq);
         break;
       }
       default: {
