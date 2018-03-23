@@ -6,7 +6,7 @@ class Frontpage extends React.Component {
     super(props);
     this.isAuthenticated = this.props.isAuthenticated.bind(this);
     this.state = {
-      endpoint:"http://192.168.0.103:3001",
+      endpoint:"https://obscure-savannah-29990.herokuapp.com/",
       answers:[],
       equation:'',
       chosenNumber: 0,
